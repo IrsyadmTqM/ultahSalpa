@@ -164,6 +164,10 @@
   .giftbox.open .glow{opacity:1;box-shadow:0 0 70px 50px rgba(255,236,170,.85)}
   @keyframes wobble{0%,100%{transform:rotate(0)}8%{transform:rotate(-5deg)}16%{transform:rotate(5deg)}24%{transform:rotate(-3deg)}32%{transform:rotate(0)}}
   .hint{font-family:"Caveat",cursive;font-size:1.5rem;color:var(--rose);animation:pulse 1.8s ease-in-out infinite}
+  .mic-note{
+    margin-top:14px;max-width:30ch;padding:10px 16px;border-radius:16px;
+    background:rgba(255,255,255,.7);color:var(--ink-soft);font-size:.85rem;line-height:1.5;box-shadow:var(--shadow);
+  }
   @keyframes pulse{0%,100%{opacity:.55}50%{opacity:1}}
 
   /* ---------- main story ---------- */
@@ -192,16 +196,24 @@
   .cake{width:100%;height:auto;display:block;cursor:pointer;overflow:visible;outline:none}
   .cake:focus-visible{outline:3px dashed var(--rose);outline-offset:6px;border-radius:12px}
   .cake .flame{transform-box:fill-box;transform-origin:50% 100%;animation:flicker .9s ease-in-out infinite alternate;transition:transform .35s ease, opacity .35s ease}
-  .cake .flame:nth-of-type(2){animation-delay:.2s}
   .cake .halo{transition:opacity .4s ease;animation:haloPulse 1.4s ease-in-out infinite alternate}
   @keyframes flicker{0%{transform:scale(1,1) rotate(-3deg)}100%{transform:scale(.88,1.1) rotate(3deg)}}
   @keyframes haloPulse{0%{opacity:.35}100%{opacity:.7}}
-  .cake.out .flame{transform:scale(0);opacity:0;animation:none}
-  .cake.out .halo{opacity:0;animation:none}
+  /* api ikut miring & mengecil sesuai kencangnya tiupan (--blow 0..1 diisi dari mic) */
+  .cake .sway{
+    transform-box:view-box;
+    transform:skewX(calc(var(--blow, 0) * -32deg)) scale(calc(1 - var(--blow, 0) * .35), calc(1 - var(--blow, 0) * .5));
+    transition:transform .1s linear;
+  }
+  .cake .fire.off .flame{transform:scale(0);opacity:0;animation:none}
+  .cake .fire.off .halo{opacity:0;animation:none}
   .cake .smoke{opacity:0}
-  .cake.out .smoke{animation:smoke 1.6s ease-out forwards}
-  .cake.out .smoke:nth-of-type(2){animation-delay:.12s}
-  .cake.out .smoke:nth-of-type(3){animation-delay:.24s}
+  .cake .fire.off .smoke{animation:smoke 1.6s ease-out forwards}
+  .cake-mic{
+    display:inline-flex;align-items:center;gap:6px;margin-top:2px;padding:5px 12px;border-radius:99px;
+    background:rgba(255,255,255,.75);font-size:.75rem;font-weight:700;color:var(--ink-soft);
+  }
+  .cake-mic i{width:8px;height:8px;border-radius:50%;background:#3cc47c;animation:pulse 1.2s ease-in-out infinite}
   @keyframes smoke{0%{opacity:.7;transform:translateY(0) scale(.6)}100%{opacity:0;transform:translateY(-34px) scale(1.6)}}
   .cake-hint{font-family:"Caveat",cursive;font-size:1.45rem;color:var(--rose);min-height:2.2em;line-height:1.1;margin-top:6px}
   .cake-hint.done{animation:none;color:var(--rose-deep)}
@@ -405,7 +417,8 @@
     <span class="box"></span>
     <span class="lid"><span class="bow"></span></span>
   </button>
-  <p class="hint">ketuk kadonya ♥</p>
+  <p class="hint" id="giftHint">ketuk kadonya ♥</p>
+  <p class="mic-note" id="micNote">🎤 Nanti kamu bisa niup lilinnya beneran. Pas kadonya diketuk, izinkan mikrofonnya ya.</p>
 </section>
 
 <!-- 3. Isi utama -->
@@ -445,18 +458,25 @@
           <rect x="131" y="44" width="9" height="32" rx="3" fill="#fff"/>
           <rect x="131" y="50" width="9" height="4" fill="#f7a6b9"/><rect x="131" y="60" width="9" height="4" fill="#f7a6b9"/>
         </g>
-        <circle class="halo" cx="84.5" cy="32" r="14" fill="#ffe7a8"/>
-        <circle class="halo" cx="110" cy="26" r="14" fill="#ffe7a8"/>
-        <circle class="halo" cx="135.5" cy="32" r="14" fill="#ffe7a8"/>
-        <path class="flame" d="M84.5 22 c6 7 7 13 0 19 c-7 -6 -6 -12 0 -19z" fill="#ffb02e"/>
-        <path class="flame" d="M110 16 c6 7 7 13 0 19 c-7 -6 -6 -12 0 -19z" fill="#ffb02e"/>
-        <path class="flame" d="M135.5 22 c6 7 7 13 0 19 c-7 -6 -6 -12 0 -19z" fill="#ffb02e"/>
-        <circle class="smoke" cx="84.5" cy="36" r="5" fill="#d9cfd2"/>
-        <circle class="smoke" cx="110" cy="30" r="5" fill="#d9cfd2"/>
-        <circle class="smoke" cx="135.5" cy="36" r="5" fill="#d9cfd2"/>
+        <g class="fire" data-i="0">
+          <circle class="halo" cx="84.5" cy="32" r="14" fill="#ffe7a8"/>
+          <g class="sway" style="transform-origin:84.5px 41px"><path class="flame" d="M84.5 22 c6 7 7 13 0 19 c-7 -6 -6 -12 0 -19z" fill="#ffb02e"/></g>
+          <circle class="smoke" cx="84.5" cy="36" r="5" fill="#d9cfd2"/>
+        </g>
+        <g class="fire" data-i="1">
+          <circle class="halo" cx="110" cy="26" r="14" fill="#ffe7a8"/>
+          <g class="sway" style="transform-origin:110px 35px"><path class="flame" d="M110 16 c6 7 7 13 0 19 c-7 -6 -6 -12 0 -19z" fill="#ffb02e" style="animation-delay:.2s"/></g>
+          <circle class="smoke" cx="110" cy="30" r="5" fill="#d9cfd2"/>
+        </g>
+        <g class="fire" data-i="2">
+          <circle class="halo" cx="135.5" cy="32" r="14" fill="#ffe7a8"/>
+          <g class="sway" style="transform-origin:135.5px 41px"><path class="flame" d="M135.5 22 c6 7 7 13 0 19 c-7 -6 -6 -12 0 -19z" fill="#ffb02e" style="animation-delay:.4s"/></g>
+          <circle class="smoke" cx="135.5" cy="36" r="5" fill="#d9cfd2"/>
+        </g>
       </svg>
     </div>
     <p class="cake-hint" id="cakeHint">make a wish dulu, terus ketuk kuenya buat tiup lilin</p>
+    <p class="cake-mic" id="cakeMic" hidden><i></i>mic nyala, tiup aja ke hapenya</p>
     <p class="scroll-cue" id="scrollCue">geser ke bawah<i>↓</i></p>
   </section>
 
@@ -864,22 +884,41 @@
       schedule();
     }
 
+    function setupFile() {
+      if (mode || !CONFIG.musik) return;
+      mode = "file";
+      file = new Audio(CONFIG.musik);
+      file.loop = true;
+      file.addEventListener("error", () => { file = null; mode = "synth"; if (on) { startSynth(); fade(level(), 1.5); } }, { once: true });
+      ctx.createMediaElementSource(file).connect(out);
+    }
+
+    // dipanggil langsung saat kado diketuk (masih dalam sentuhan), biar hape mau muter audio
+    // walaupun kadonya baru kebuka setelah izin mic dijawab. volumenya masih 0.
+    function prime() {
+      if (!audio()) return;
+      setupFile();
+      if (mode === "file" && file) file.play().catch(() => {});
+    }
+
     function start() {
       if (on || !audio()) return;
       on = true;
       clearTimeout(offTimer);
       btn.hidden = false;
       btn.classList.add("on");
-      if (!mode && CONFIG.musik) {
-        mode = "file";
-        file = new Audio(CONFIG.musik);
-        file.loop = true;
-        file.addEventListener("error", () => { file = null; if (on) { startSynth(); fade(LEVEL.synth, 1.5); } else mode = "synth"; }, { once: true });
-        ctx.createMediaElementSource(file).connect(out);
-      }
+      setupFile();
       if (mode === "file" && file) file.play().catch(() => {});
       else startSynth();
-      fade(LEVEL[mode], 1.5);
+      fade(level(), 1.5);
+    }
+
+    // kecilin musik selama nunggu tiupan, biar mic nggak ketipu suara lagu
+    let dipped = false;
+    const level = () => (LEVEL[mode] || 1) * (dipped ? 0.3 : 1);
+    function dip(v) {
+      dipped = v;
+      if (on) fade(level(), 1.2);
     }
 
     function stop() {
@@ -898,7 +937,7 @@
       if (!on) return;
       clearTimeout(duckTimer);
       fade(0, 0.4);
-      duckTimer = setTimeout(() => on && fade(LEVEL[mode], 2.5), sec * 1000);
+      duckTimer = setTimeout(() => on && fade(level(), 2.5), sec * 1000);
     }
 
     btn.addEventListener("click", () => (on ? stop() : start()));
@@ -908,7 +947,78 @@
       else { ctx.resume(); if (file && mode === "file") file.play().catch(() => {}); }
     });
 
-    return { start, duck, ctx: audio };
+    return { prime, start, duck, dip, ctx: audio };
+  })();
+
+  // mic buat niup lilin
+  const Mic = (() => {
+    let stream = null, src = null, raf = null, state = "unknown"; // unknown | granted | denied | unsupported
+
+    async function request() {
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) { state = "unsupported"; return false; }
+      try {
+        // noiseSuppression dimatiin, soalnya suara tiupan itu "noise" dan bakal dibuang
+        stream = await navigator.mediaDevices.getUserMedia({
+          audio: { echoCancellation: true, noiseSuppression: false, autoGainControl: false },
+        });
+        state = "granted";
+        return true;
+      } catch (e) {
+        state = "denied";
+        return false;
+      }
+    }
+
+    async function ensure() {
+      if (stream && stream.getAudioTracks().some((t) => t.readyState === "live")) return true;
+      return state === "granted" ? request() : false;
+    }
+
+    // panggil onLevel(kekuatan 0..1, dt detik) tiap frame
+    function listen(onLevel) {
+      const ctx = Music.ctx();
+      if (!ctx || !stream) return;
+      cancelAnimationFrame(raf);
+      if (src) src.disconnect();
+      src = ctx.createMediaStreamSource(stream);
+      const an = ctx.createAnalyser();
+      an.fftSize = 1024;
+      an.smoothingTimeConstant = 0.3;
+      src.connect(an);
+      const td = new Float32Array(an.fftSize), fd = new Uint8Array(an.frequencyBinCount);
+      const binHz = ctx.sampleRate / an.fftSize, lowEnd = Math.max(2, Math.round(500 / binHz));
+      let base = 0.01, warm = 0, last = performance.now();
+      const loop = (now) => {
+        const dt = Math.min(0.1, (now - last) / 1000);
+        last = now;
+        an.getFloatTimeDomainData(td);
+        let sum = 0;
+        for (let i = 0; i < td.length; i++) sum += td[i] * td[i];
+        const rms = Math.sqrt(sum / td.length);
+        an.getByteFrequencyData(fd);
+        let lo = 0;
+        for (let i = 1; i < lowEnd; i++) lo += fd[i];
+        lo /= lowEnd - 1;
+        // ambang ikut suara sekitar, jadi ruangan rame nggak langsung dianggap tiupan
+        const thr = Math.max(0.05, base * 3.5);
+        let strength = 0;
+        if (rms > thr && lo > 90) strength = Math.min(1, (rms - thr) / (thr * 1.5));
+        else base += (rms - base) * (warm < 0.6 ? 0.25 : 0.02);
+        warm += dt;
+        onLevel(warm < 0.6 ? 0 : strength, dt);
+        raf = requestAnimationFrame(loop);
+      };
+      raf = requestAnimationFrame(loop);
+    }
+
+    function stop() {
+      cancelAnimationFrame(raf);
+      raf = null;
+      if (src) { src.disconnect(); src = null; }
+      if (stream) { stream.getTracks().forEach((t) => t.stop()); stream = null; }
+    }
+
+    return { request, ensure, listen, stop, get state() { return state; } };
   })();
 
   // lagu "Happy Birthday" kecil pakai Web Audio
@@ -981,8 +1091,17 @@
 
   function showGift() { gift.hidden = false; }
 
-  $("#giftBtn").addEventListener("click", function () {
-    if (this.classList.contains("open")) return;
+  $("#giftBtn").addEventListener("click", async function () {
+    if (this.dataset.busy) return;
+    this.dataset.busy = "1";
+    Music.prime();
+    // minta izin mic dulu, kadonya baru kebuka setelah dijawab (paling lama nunggu 15 detik)
+    $("#giftHint").textContent = "izinkan mikrofonnya dulu ya 🎤";
+    const ask = Mic.request();
+    ask.then((ok) => { if (ok && !main.hidden) startListening(); });
+    await Promise.race([ask, new Promise((r) => setTimeout(r, 15000))]);
+    $("#giftHint").textContent = "yeay! ♥";
+    $("#micNote").hidden = true;
     this.classList.add("open");
     Music.start();
     if (navigator.vibrate) navigator.vibrate([40, 60, 90]);
@@ -996,12 +1115,68 @@
     main.hidden = false;
     scrollTo(0, 0);
     requestAnimationFrame(() => main.classList.add("show"));
+    startListening();
   }
 
   // tiup lilin
-  const cake = $("#cake"), hint = $("#cakeHint");
+  const cake = $("#cake"), hint = $("#cakeHint"), micBadge = $("#cakeMic");
+  const fires = [...cake.querySelectorAll(".fire")];
+  const HINT_TAP = "make a wish dulu, terus ketuk kuenya buat tiup lilin";
+  const HINT_MIC = "make a wish dulu, terus tiup lilinnya beneran 💨";
+  let blowTime = 0, order = [];
+
+  function lightCandles() {
+    fires.forEach((f) => f.classList.remove("off"));
+    cake.classList.remove("out");
+    cake.style.setProperty("--blow", 0);
+    blowTime = 0;
+    order = [0, 1, 2].sort(() => Math.random() - 0.5);
+  }
+  lightCandles();
+
+  // makin lama ditiup, lilinnya mati satu-satu
+  const NEED = [0.35, 0.8, 1.25];
+  function onBlowLevel(strength, dt) {
+    cake.style.setProperty("--blow", strength.toFixed(2));
+    if (strength > 0.15) blowTime += dt * (0.6 + strength);
+    else blowTime = Math.max(0, blowTime - dt * 0.15);
+    let out = fires.filter((f) => f.classList.contains("off")).length;
+    while (out < 3 && blowTime >= NEED[out]) {
+      fires[order[out]].classList.add("off");
+      out++;
+      if (navigator.vibrate) navigator.vibrate(30);
+      if (out < 3) hint.textContent = out === 1 ? "terus, tiup lagi! 💨" : "dikit lagi! 💨💨";
+    }
+    if (out === 3) blow();
+  }
+
+  async function startListening() {
+    if (cake.classList.contains("out")) return;
+    if (!(await Mic.ensure())) { hint.textContent = HINT_TAP; micBadge.hidden = true; return; }
+    hint.textContent = HINT_MIC;
+    micBadge.hidden = false;
+    Music.dip(true);
+    Mic.listen(onBlowLevel);
+  }
+
+  function stopListening() {
+    Mic.stop();
+    micBadge.hidden = true;
+    cake.style.setProperty("--blow", 0);
+  }
+
+  // mic dimatiin kalau pindah aplikasi, dinyalain lagi pas balik
+  document.addEventListener("visibilitychange", () => {
+    if (main.hidden || cake.classList.contains("out") || Mic.state !== "granted") return;
+    if (document.hidden) stopListening();
+    else startListening();
+  });
+
   function blow() {
     if (cake.classList.contains("out")) return;
+    stopListening();
+    Music.dip(false);
+    fires.forEach((f) => f.classList.add("off"));
     cake.classList.add("out");
     hint.textContent = "Yeay! Semoga semua doamu dikabulin ✨";
     hint.classList.add("done");
@@ -1058,9 +1233,10 @@
 
   // rayain lagi
   $("#replay").addEventListener("click", () => {
-    cake.classList.remove("out");
-    hint.textContent = "make a wish lagi, terus tiup lilinnya";
+    lightCandles();
+    hint.textContent = HINT_TAP;
     hint.classList.remove("done");
+    startListening();
     scrollTo({ top: 0, behavior: reduced ? "auto" : "smooth" });
     confetti(120, innerWidth / 2, innerHeight * 0.3);
   });
