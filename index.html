@@ -787,7 +787,7 @@
 
   // backsound: pakai file CONFIG.musik kalau ada, kalau nggak ada pakai melodi kotak musik
   const Music = (() => {
-    let ctx = null, out = null, timer = null, duckTimer = null, offTimer = null;
+    let ctx = null, out = null, synthBus = null, timer = null, duckTimer = null, offTimer = null;
     let nextTime = 0, step = 0, on = false, mode = null, file = null;
     const btn = $("#musicBtn");
     const LEVEL = { file: 0.6, synth: 1 };
@@ -813,12 +813,14 @@
         ctx = new AC();
         out = ctx.createGain();
         out.gain.value = 0;
-        // gema lembut
+        out.connect(ctx.destination);
+        // gema lembut cuma buat melodi kotak musik, lagu mp3 langsung ke out tanpa gema
+        synthBus = ctx.createGain();
         const dl = ctx.createDelay(), fb = ctx.createGain(), lp = ctx.createBiquadFilter();
         dl.delayTime.value = 0.3; fb.gain.value = 0.28;
         lp.type = "lowpass"; lp.frequency.value = 2200;
-        out.connect(ctx.destination);
-        out.connect(dl); dl.connect(lp); lp.connect(fb); fb.connect(dl); lp.connect(ctx.destination);
+        synthBus.connect(out);
+        synthBus.connect(dl); dl.connect(lp); lp.connect(fb); fb.connect(dl); lp.connect(out);
       }
       if (ctx.state === "suspended") ctx.resume();
       return ctx;
@@ -831,7 +833,7 @@
         g.gain.setValueAtTime(0.0001, t);
         g.gain.exponentialRampToValueAtTime(v, t + 0.01);
         g.gain.exponentialRampToValueAtTime(0.0001, t + len);
-        o.connect(g).connect(out);
+        o.connect(g).connect(synthBus);
         o.start(t); o.stop(t + len + 0.05);
       }
     }
@@ -891,11 +893,11 @@
       }, 700);
     }
 
-    // kecilin musik sebentar waktu lagu Happy Birthday main
+    // diamkan musik sebentar waktu lagu Happy Birthday main, biar nggak tabrakan
     function duck(sec) {
       if (!on) return;
       clearTimeout(duckTimer);
-      fade(LEVEL[mode] * 0.12, 0.5);
+      fade(0, 0.4);
       duckTimer = setTimeout(() => on && fade(LEVEL[mode], 2.5), sec * 1000);
     }
 
