@@ -287,9 +287,9 @@
   .thought h3{font-family:"Fraunces",serif;font-weight:600;font-size:1.2rem;margin:6px 0 2px}
   .thought p{font-family:"Caveat",cursive;font-size:1.3rem;line-height:1.12;color:#5a3340}
   .th-pic{position:relative;display:inline-block}
-  .th-pic img{display:block;height:clamp(80px,13vh,118px);width:auto;filter:drop-shadow(0 6px 10px rgba(74,43,53,.25))}
+  .th-pic img{display:block;height:clamp(70px,12vh,118px);width:auto;filter:drop-shadow(0 6px 10px rgba(74,43,53,.25))}
   /* balon "kuat": jubah + lengan kartun di belakang stiker, ukurannya ngikutin tinggi stiker */
-  .th-pic.kuat img{position:relative;z-index:1;height:clamp(100px,16vh,140px)}
+  .th-pic.kuat img{position:relative;z-index:1;height:clamp(84px,14vh,140px)}
   .th-pic.kuat .herofx{position:absolute;left:50%;bottom:6.5%;width:174%;height:81%;margin-left:-87%;overflow:visible}
   .herofx .fore{transform-box:fill-box;transform-origin:30% 88%;animation:pump .8s ease-in-out infinite alternate}
   .herofx .bicep{transform-box:fill-box;transform-origin:50% 100%;animation:bicep .8s ease-in-out infinite alternate}
@@ -967,7 +967,7 @@
       // aku jalan dari kiri ke kanan, terus balik badan & maju ke depan bawa amplop
       const ww = walker.offsetWidth, wh = walker.offsetHeight;
       let x = p < 0.12 ? lerp(-0.25 * W, 0.08 * W, ease(seg(p, 0, 0.12))) : lerp(0.08 * W, 0.6 * W, seg(p, 0.12, 0.94));
-      const headX = x + ww * 0.52, headY = H * 0.7 - wh * 0.78;
+      const headX = x + ww * 0.52, headY = H * 0.7 - wh * 0.78, crown = H * 0.7 - wh * 0.92, walkX = x;
       x = lerp(x, W / 2 - ww / 2, ease(seg(L, 0, 0.12)));
       const come = ease(seg(L, 0.08, 0.36)), retreat = ease(seg(Wp, 0.02, 0.12));
       const wy = lerp(lerp(0, H * 0.22, come), H * 0.1, retreat), wsc = lerp(lerp(1, 2.6, come), 1.75, retreat);
@@ -1001,6 +1001,7 @@
       thoughts.forEach((th, i) => {
         const o = fade(p, ...PHASES[i]);
         th.style.opacity = o;
+        if (o > 0) th.style.top = clamp(Math.min(H * 0.22, crown - 36 - th.offsetHeight), H * 0.03, H) + "px";
         th.style.transform = `translateY(${(1 - o) * 24}px) scale(${lerp(0.7, 1, ease(o))})`;
         if (o > co) { co = o; cur = th; }
       });
@@ -1015,7 +1016,9 @@
 
       const o3 = fade(p, ...PHASES[2]);
       wk.style.opacity = o3;
-      wk.style.transform = `translate(${headX - 70}px, ${headY - 48}px)`;
+      const wkW = wk.offsetWidth;
+      const wkX = walkX - wkW - 8 > 6 ? walkX - wkW - 8 : walkX + ww + 8;
+      wk.style.transform = `translate(${wkX}px, ${crown + 4}px)`;
 
       // amplop pindah dari tangan ke tengah layar, tutupnya kebuka, suratnya keluar
       const give = ease(seg(L, 0.4, 0.5));
@@ -1046,7 +1049,7 @@
       says.forEach((sy, i) => {
         const a = 0.12 + i * 0.17;
         const o = i === says.length - 1 ? seg(Wp, a, a + 0.04) : fade(Wp, a, a + 0.04, a + 0.15, a + 0.17);
-        const top = Math.max(H * 0.32, headTop - sy.offsetHeight - 22);
+        const top = Math.max(wishTitle.offsetTop + wishTitle.offsetHeight + 10, headTop - sy.offsetHeight - 22);
         sy.style.opacity = o;
         sy.style.transform = `translateY(${top + (1 - o) * 18}px) scale(${lerp(0.75, 1, ease(o))})`;
         if (o > 0.6) talking = true;
