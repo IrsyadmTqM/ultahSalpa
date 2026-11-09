@@ -100,6 +100,9 @@
     transition:opacity .7s ease, transform .7s ease;
   }
   .screen.leave{opacity:0;transform:scale(1.04);pointer-events:none}
+  /* layar pembuka: semua huruf kecil */
+  .screen{text-transform:lowercase}
+  .screen .eyebrow{text-transform:lowercase;letter-spacing:.06em;font-size:.95rem}
 
   .eyebrow{
     font-size:.78rem;font-weight:800;letter-spacing:.22em;text-transform:uppercase;
@@ -404,28 +407,28 @@
 <section class="screen" id="lock" hidden>
   <div class="seal">♥</div>
   <p class="eyebrow">ini khusus untuk <span class="nama"></span></p>
-  <h1 class="title">Hai, <em class="nama"></em></h1>
-  <p class="lead">nungguin yaaa, hehe sabar dikit yaa</p>
+  <h1 class="title">hai <em class="nama"></em></h1>
+  <p class="lead">nungguin yaaa hehe sabar dikit yaa</p>
   <div class="countdown" role="timer" aria-live="off">
     <div><b id="cd-d">0</b><span>hari</span></div>
     <div><b id="cd-h">00</b><span>jam</span></div>
     <div><b id="cd-m">00</b><span>menit</span></div>
     <div><b id="cd-s">00</b><span>detik</span></div>
   </div>
-  <span class="date-chip">Rabu, 11 November 2026</span>
+  <span class="date-chip">rabu 11 november 2026</span>
 </section>
 
 <!-- 2. Kado yang harus diketuk -->
 <section class="screen" id="gift" hidden>
-  <p class="eyebrow">udah waktunya</p>
-  <h1 class="title">Ini buat kamu, <em class="nama"></em></h1>
+  <p class="eyebrow">waah udah waktunya nihh</p>
+  <h1 class="title">selamat buka kadonya yaa <em class="nama"></em></h1>
   <button class="giftbox" id="giftBtn" aria-label="Buka kado">
     <span class="glow"></span>
     <span class="box"></span>
     <span class="lid"><span class="bow"></span></span>
   </button>
   <p class="hint" id="giftHint">ketuk kadonya ♥</p>
-  <p class="mic-note" id="micNote">🎤 Nanti kamu bisa niup lilinnya beneran. Pas kadonya diketuk, izinkan mikrofonnya ya.</p>
+  <p class="mic-note" id="micNote">🎤 nanti lilinnya bisa kamu tiup beneran lho jadi pas muncul izin mic pencet izinkan yaa</p>
 </section>
 
 <!-- 3. Isi utama -->
@@ -1112,11 +1115,11 @@
     this.dataset.busy = "1";
     Music.prime();
     // minta izin mic dulu, kadonya baru kebuka setelah dijawab (paling lama nunggu 15 detik)
-    $("#giftHint").textContent = "izinkan mikrofonnya dulu ya 🎤";
+    $("#giftHint").textContent = "pencet izinkan dulu yaa 🎤";
     const ask = Mic.request();
     ask.then((ok) => { if (ok && !main.hidden) startListening(); });
     await Promise.race([ask, new Promise((r) => setTimeout(r, 15000))]);
-    $("#giftHint").textContent = "yeay! ♥";
+    $("#giftHint").textContent = "yeayy ♥";
     $("#micNote").hidden = true;
     this.classList.add("open");
     Music.start();
