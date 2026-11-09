@@ -303,22 +303,96 @@
   .polaroid figcaption{font-family:"Caveat",cursive;font-size:1.35rem;line-height:1.15;text-align:center;margin-top:10px;color:#5a3340}
   .swipe-hint{text-align:center;font-size:.78rem;font-weight:700;letter-spacing:.12em;color:var(--ink-soft)}
 
-  /* pride cards */
-  .pride{display:grid;gap:14px}
-  .pcard{
-    position:relative;background:rgba(255,255,255,.82);border-radius:22px;padding:20px 20px 20px 74px;
-    box-shadow:var(--shadow);
+  /* kartu bangga (pakai potongan foto + animasi) */
+  .pride{display:grid;gap:16px}
+  .pcard{position:relative;background:rgba(255,255,255,.88);border-radius:22px;overflow:hidden;box-shadow:var(--shadow)}
+  .pscene{position:relative;height:215px;overflow:hidden;isolation:isolate}
+  .pfoto{
+    position:absolute;bottom:-12px;left:50%;height:86%;width:auto;z-index:3;
+    transform:translateX(-50%);filter:drop-shadow(0 6px 10px rgba(74,43,53,.28));
   }
-  .pcard .num{
-    position:absolute;left:18px;top:18px;width:42px;height:42px;border-radius:14px;display:grid;place-items:center;
-    font-family:"Fraunces",serif;font-style:italic;font-weight:600;font-size:1.15rem;color:#fff;
+  .pcard.in .pfoto{animation:popUp .9s cubic-bezier(.3,1.5,.5,1) .2s both}
+  @keyframes popUp{from{transform:translate(-50%,70%)}to{transform:translate(-50%,0)}}
+  .ptext{padding:16px 18px 18px}
+  .ptext .num{
+    display:inline-grid;place-items:center;width:34px;height:34px;border-radius:12px;margin-bottom:8px;
+    font-family:"Fraunces",serif;font-style:italic;font-weight:600;color:#fff;
   }
-  .pcard:nth-child(4n+1) .num{background:var(--rose)}
-  .pcard:nth-child(4n+2) .num{background:var(--gold)}
-  .pcard:nth-child(4n+3) .num{background:#b48ae0}
-  .pcard:nth-child(4n+4) .num{background:#f08a6c}
-  .pcard h3{font-family:"Fraunces",serif;font-weight:600;font-size:1.15rem;margin-bottom:4px}
-  .pcard p{color:var(--ink-soft);line-height:1.55;font-size:.95rem}
+  .pcard:nth-child(1) .num{background:#f08a6c}
+  .pcard:nth-child(2) .num{background:var(--rose)}
+  .pcard:nth-child(3) .num{background:#5fb0d4}
+  .ptext h3{font-family:"Fraunces",serif;font-weight:600;font-size:1.2rem;margin-bottom:4px}
+  .ptext p{color:var(--ink-soft);line-height:1.55;font-size:.95rem}
+
+  /* 01 kuat: latar komik berputar + jubah superhero */
+  .s-kuat{background:#ffc23d}
+  .s-kuat::before{
+    content:"";position:absolute;inset:-60%;z-index:0;
+    background:repeating-conic-gradient(from 0deg,#ffd978 0 9deg,#ffc23d 9deg 18deg);
+    animation:spin 40s linear infinite;
+  }
+  .s-kuat .cape{
+    position:absolute;left:50%;bottom:-16px;width:300px;height:166px;z-index:2;
+    transform-origin:50% 0;animation:cape 1.1s ease-in-out infinite alternate;
+  }
+  @keyframes cape{
+    from{transform:translateX(-50%) skewX(-7deg) scaleX(.97)}
+    to{transform:translateX(-50%) skewX(7deg) scaleX(1.05)}
+  }
+  .pow{
+    position:absolute;top:16px;left:14px;z-index:4;padding:2px 12px 4px;border-radius:12px;
+    background:#fff;border:3px solid var(--ink);box-shadow:3px 3px 0 var(--ink);
+    font-family:"Caveat",cursive;font-weight:700;font-size:1.6rem;color:#d8343f;
+    transform:rotate(-8deg);animation:pow 1.4s ease-in-out infinite;
+  }
+  @keyframes pow{0%,100%{transform:rotate(-8deg) scale(1)}50%{transform:rotate(-4deg) scale(1.12)}}
+  .flex{position:absolute;top:20px;right:18px;z-index:4;font-size:2rem;animation:flexy .8s ease-in-out infinite alternate}
+  @keyframes flexy{from{transform:rotate(-12deg)}to{transform:rotate(14deg) scale(1.1)}}
+  .twinkle{position:absolute;z-index:1;color:#fff;font-size:1.1rem;animation:twinkle 1.6s ease-in-out infinite}
+  @keyframes twinkle{0%,100%{opacity:.2;transform:scale(.6)}50%{opacity:1;transform:scale(1.2)}}
+
+  /* 02 baik banget: lingkaran malaikat + sayap + hati */
+  .s-baik{background:linear-gradient(180deg,#ffe6ee,#ffc7d6)}
+  .s-baik .wing{position:absolute;top:52px;width:124px;z-index:2}
+  .s-baik .wing.l{left:calc(50% - 178px);transform-origin:100% 80%;animation:flapL 1.2s ease-in-out infinite alternate}
+  .s-baik .wing.r{left:calc(50% + 50px);transform-origin:0 80%;animation:flapR 1.2s ease-in-out infinite alternate}
+  @keyframes flapL{from{transform:rotate(6deg)}to{transform:rotate(-12deg)}}
+  @keyframes flapR{from{transform:rotate(-6deg)}to{transform:rotate(12deg)}}
+  .halo-ring{
+    position:absolute;top:12px;left:calc(50% - 52px);width:84px;height:22px;z-index:4;border-radius:50%;
+    border:6px solid #ffd45a;box-shadow:0 0 14px 4px rgba(255,220,110,.85), inset 0 0 8px rgba(255,220,110,.9);
+    animation:haloBob 1.8s ease-in-out infinite;
+  }
+  @keyframes haloBob{0%,100%{transform:translateY(0) rotate(-6deg)}50%{transform:translateY(-6px) rotate(-2deg)}}
+  .fheart{position:absolute;bottom:-20px;z-index:1;color:var(--rose);opacity:0;animation:fheart 3.4s ease-in infinite}
+  @keyframes fheart{
+    0%{opacity:0;transform:translateY(0) scale(.6)}
+    15%{opacity:.9}
+    100%{opacity:0;transform:translateY(-230px) translateX(var(--dx, 0)) scale(1.2)}
+  }
+
+  /* 03 jadi diri sendiri: gelembung + si aku ketawa */
+  .s-diri{background:linear-gradient(180deg,#d8f0ff,#c8eedd)}
+  .s-diri .pfoto{left:auto;right:-6px;height:90%;transform:none}
+  .pcard.in .s-diri .pfoto{animation-name:popUpR}
+  @keyframes popUpR{from{transform:translateY(70%)}to{transform:translateY(0)}}
+  .bub{
+    position:absolute;left:62%;top:34%;z-index:4;border-radius:50%;opacity:0;
+    background:radial-gradient(circle at 30% 30%,#fff 0 12%,rgba(150,205,255,.35) 40%,rgba(255,140,210,.45) 72%,rgba(255,255,255,.75));
+    border:1.5px solid rgba(255,255,255,.95);box-shadow:0 0 0 1px rgba(110,170,220,.35), inset -3px -3px 6px rgba(120,190,255,.35);animation:bub 4s ease-out infinite;
+  }
+  @keyframes bub{
+    0%{opacity:0;transform:translate(0,0) scale(.3)}
+    12%{opacity:1}
+    100%{opacity:0;transform:translate(var(--bx),var(--by)) scale(1)}
+  }
+  .s-diri .me2{position:absolute;left:16px;bottom:-4px;width:92px;z-index:3;animation:laugh .45s ease-in-out infinite alternate}
+  @keyframes laugh{from{transform:translateY(0) rotate(-2deg)}to{transform:translateY(-4px) rotate(2deg)}}
+  .wk{
+    position:absolute;left:14px;top:40px;z-index:4;padding:4px 10px 6px;border-radius:14px 14px 14px 4px;
+    background:#fff;box-shadow:var(--shadow);font-family:"Caveat",cursive;font-weight:700;font-size:1.25rem;color:#3d8fb5;
+    animation:pow 1.2s ease-in-out infinite;
+  }
   .proud-banner{
     margin-top:18px;text-align:center;padding:22px 18px;border-radius:22px;
     background:linear-gradient(135deg,var(--rose),#f08aa3);color:#fff;box-shadow:var(--shadow);
@@ -591,21 +665,68 @@
       <h2>yang bikin aku <em>bangga</em> sama kamu</h2>
     </div>
     <div class="pride">
-      <article class="pcard reveal"><span class="num">01</span>
-        <h3>kamu kuat</h3>
-        <p>banyak hari berat yang udah kamu lewatin termasuk yang nggak pernah kamu ceritain dan kamu tetep jalan terus keren banget sih</p>
+      <article class="pcard reveal">
+        <div class="pscene s-kuat">
+          <span class="twinkle" style="left:12%;top:58%">✦</span>
+          <span class="twinkle" style="left:84%;top:62%;animation-delay:.5s">✦</span>
+          <span class="twinkle" style="left:72%;top:14%;animation-delay:1s">✦</span>
+          <svg class="cape" viewBox="0 0 270 150" aria-hidden="true">
+            <defs><linearGradient id="capeG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f0485c"/><stop offset="1" stop-color="#c92a40"/></linearGradient></defs>
+            <path d="M70 18 Q135 -2 200 18 Q236 70 266 140 Q242 128 220 144 Q194 128 166 144 Q135 128 104 144 Q76 128 50 144 Q28 128 4 140 Q34 70 70 18 Z" fill="url(#capeG)"/>
+            <path d="M92 24 Q70 80 60 136 M178 24 Q200 80 210 136" stroke="#a91f33" stroke-width="3" fill="none" opacity=".5"/>
+          </svg>
+          <img class="pfoto" src="foto/kuat.webp" alt="" loading="lazy">
+          <span class="pow">kuat!</span>
+          <span class="flex">💪</span>
+        </div>
+        <div class="ptext">
+          <span class="num">01</span>
+          <h3>kamu kuat</h3>
+          <p>banyak hari berat yang udah kamu lewatin termasuk yang nggak pernah kamu ceritain dan kamu tetep jalan terus keren banget sih</p>
+        </div>
       </article>
-      <article class="pcard reveal"><span class="num">02</span>
-        <h3>hatimu baik</h3>
-        <p>kamu tuh pedulinya tulus ke orang lain makanya orang-orang betah deket kamu</p>
+      <article class="pcard reveal">
+        <div class="pscene s-baik">
+          <svg class="wing l" viewBox="0 0 100 80" aria-hidden="true"><path transform="matrix(-1 0 0 1 100 0)" d="M4 70 C30 72 80 60 96 20 C76 30 66 25 60 10 C50 30 36 28 30 14 C22 38 10 46 4 70Z" fill="#fff" stroke="#f4c3d1" stroke-width="2"/></svg>
+          <svg class="wing r" viewBox="0 0 100 80" aria-hidden="true"><path d="M4 70 C30 72 80 60 96 20 C76 30 66 25 60 10 C50 30 36 28 30 14 C22 38 10 46 4 70Z" fill="#fff" stroke="#f4c3d1" stroke-width="2"/></svg>
+          <span class="fheart" style="left:10%;font-size:18px;--dx:12px">♥</span>
+          <span class="fheart" style="left:24%;font-size:13px;animation-delay:1.1s;--dx:-10px">♥</span>
+          <span class="fheart" style="left:76%;font-size:20px;animation-delay:.5s;--dx:-14px">♥</span>
+          <span class="fheart" style="left:88%;font-size:14px;animation-delay:1.8s;--dx:8px">♥</span>
+          <span class="fheart" style="left:60%;font-size:12px;animation-delay:2.5s;--dx:10px">♥</span>
+          <img class="pfoto" src="foto/baik.webp" alt="" loading="lazy">
+          <span class="halo-ring"></span>
+        </div>
+        <div class="ptext">
+          <span class="num">02</span>
+          <h3>kamu baik banget</h3>
+          <p>baiknya kamu tuh tulus banget ke semua orang makanya orang-orang betah deket kamu</p>
+        </div>
       </article>
-      <article class="pcard reveal"><span class="num">03</span>
-        <h3>kamu makin keren</h3>
-        <p>kamu yang sekarang udah jauh lebih keren dari kamu yang dulu dan aku liat itu kok</p>
-      </article>
-      <article class="pcard reveal"><span class="num">04</span>
-        <h3>kamu ya kamu</h3>
-        <p>nggak usah jadi orang lain kamu yang apa adanya udah lebih dari cukup</p>
+      <article class="pcard reveal">
+        <div class="pscene s-diri">
+          <img class="pfoto" src="foto/diri.webp" alt="" loading="lazy">
+          <span class="bub" style="width:30px;height:30px;--bx:-70px;--by:-80px"></span>
+          <span class="bub" style="width:20px;height:20px;--bx:-30px;--by:-95px;animation-delay:.9s"></span>
+          <span class="bub" style="width:38px;height:38px;--bx:-110px;--by:-60px;animation-delay:1.7s"></span>
+          <span class="bub" style="width:16px;height:16px;--bx:-50px;--by:-70px;animation-delay:2.5s"></span>
+          <span class="bub" style="width:26px;height:26px;--bx:-90px;--by:-100px;animation-delay:3.2s"></span>
+          <svg class="me2" viewBox="0 0 60 72" aria-hidden="true">
+            <path d="M8 72 C6 52 15 42 30 42 C45 42 54 52 52 72 Z" fill="#7fb3d9"/>
+            <path d="M30 44 V70" stroke="#6aa0c8" stroke-width="2" stroke-linecap="round"/>
+            <path d="M18 44 C21 36 39 36 42 44 C36 48 24 48 18 44 Z" fill="#6aa0c8"/>
+            <circle cx="15.5" cy="25" r="3.2" fill="#f2c4a8"/>
+            <circle cx="44.5" cy="25" r="3.2" fill="#f2c4a8"/>
+            <circle cx="30" cy="23" r="14" fill="#4a3030"/>
+            <path d="M22 13 Q29 8 37 11" fill="none" stroke="#6b4848" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+          <span class="wk">wkwkwk</span>
+        </div>
+        <div class="ptext">
+          <span class="num">03</span>
+          <h3>kamu jadi diri sendiri kalau bareng aku</h3>
+          <p>nggak ada jaim nggak ada pura-pura kalau lagi bareng aku kamu ya kamu dan itu yang bikin seru</p>
+        </div>
       </article>
     </div>
     <div class="proud-banner reveal">
