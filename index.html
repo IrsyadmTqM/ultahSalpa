@@ -226,13 +226,14 @@
   @keyframes smoke{0%{opacity:.7;transform:translateY(0) scale(.6)}100%{opacity:0;transform:translateY(-34px) scale(1.6)}}
   .cake-hint{font-family:"Caveat",cursive;font-size:1.45rem;color:var(--rose);min-height:2.2em;line-height:1.1;margin-top:6px}
   .cake-hint.done{animation:none;color:var(--rose-deep)}
-  .scroll-cue{margin-top:22px;font-size:.78rem;font-weight:700;letter-spacing:.14em;color:var(--ink-soft);opacity:0;transition:opacity .6s}
-  .scroll-cue.show{opacity:1}
-  .scroll-cue i{display:block;font-style:normal;font-size:1.2rem;animation:bob 1.4s ease-in-out infinite}
+  .next-btn{margin-top:18px}
+  .hero{transition:opacity .5s ease, transform .5s ease}
+  .hero.leave{opacity:0;transform:translateY(-24px)}
+  #pesan.enter{animation:rise .7s ease both}
   @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
 
   /* dunia kartun: matahari + poin bangga, semua gerak ngikutin scroll */
-  .world{position:relative;height:1050vh;margin:30px -20px 0}
+  .world{position:relative;height:1050vh;margin:0 -20px}
   .world-stage{position:sticky;top:0;height:100vh;height:100dvh;overflow:hidden}
   .sky{position:absolute;inset:0}
   .sky.dawn{background:linear-gradient(180deg,#ffb3c4 0%,#ffd2b3 55%,#ffe6c4 100%)}
@@ -412,15 +413,48 @@
   .letter p + p{margin-top:34px}
   .letter .sign{text-align:right;color:var(--rose-deep)}
 
-  /* smile jar */
-  .jar{text-align:center;background:rgba(255,255,255,.7);border-radius:26px;padding:26px 20px 24px;box-shadow:var(--shadow)}
+  /* toples: ketuk, goyang, satu kertas terbang keluar terus kebuka */
+  .jar-wrap{position:relative;text-align:center;padding-top:6px}
   .note{
-    min-height:118px;display:grid;place-items:center;margin-bottom:18px;padding:18px;border-radius:18px;
-    background:var(--paper);border:2px dashed var(--pink);
+    position:relative;max-width:300px;min-height:96px;margin:0 auto 14px;padding:16px 18px;
+    display:grid;place-items:center;visibility:hidden;border-radius:6px;background:var(--paper);
+    box-shadow:0 12px 26px -14px rgba(74,43,53,.45);transform:rotate(-2deg);
     font-family:"Caveat",cursive;font-size:1.65rem;line-height:1.2;color:var(--rose-deep);
   }
-  .note.pop{animation:pop .45s cubic-bezier(.3,1.6,.5,1)}
-  @keyframes pop{0%{transform:scale(.85);opacity:.3}100%{transform:scale(1);opacity:1}}
+  .note::before{
+    content:"";position:absolute;left:50%;top:-10px;width:70px;height:20px;margin-left:-35px;
+    background:rgba(247,166,185,.6);transform:rotate(3deg);border-radius:3px;
+  }
+  .note.show{animation:unfold .55s cubic-bezier(.3,1.4,.5,1)}
+  @keyframes unfold{from{opacity:0;transform:rotate(-8deg) scale(.4,.05)}to{opacity:1;transform:rotate(-2deg) scale(1)}}
+  .jar-btn{display:block;margin:0 auto;border:0;background:none;padding:0;cursor:pointer;-webkit-tap-highlight-color:transparent}
+  .jar-btn:focus-visible{outline:3px dashed var(--rose);outline-offset:6px;border-radius:16px}
+  .jar{display:block;width:170px;height:auto;overflow:visible;transform-origin:50% 95%;animation:jarSway 3.2s ease-in-out infinite}
+  .jar.shake{animation:jarShake .5s ease-in-out}
+  .jar .lid{transform-box:fill-box;transform-origin:50% 100%}
+  .jar.shake .lid{animation:lidPop .5s ease-out}
+  .jar .slip{transform-box:fill-box;transform-origin:50% 50%;animation:slipBob 2.2s ease-in-out infinite alternate}
+  .jar .slip.gone{animation:slipOut .35s ease-in forwards}
+  .jar .slip.back{animation:slipIn .5s cubic-bezier(.3,1.4,.5,1) backwards}
+  .jar .spark{animation:twinkle 1.8s ease-in-out infinite;transform-box:fill-box;transform-origin:50% 50%}
+  @keyframes jarSway{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2deg)}}
+  @keyframes jarShake{0%,100%{transform:rotate(0)}20%{transform:rotate(-9deg)}40%{transform:rotate(8deg)}60%{transform:rotate(-6deg)}80%{transform:rotate(4deg)}}
+  @keyframes lidPop{0%,100%{transform:translateY(0) rotate(0)}35%{transform:translateY(-16px) rotate(-12deg)}}
+  @keyframes slipBob{from{transform:translateY(0) rotate(-4deg)}to{transform:translateY(-3px) rotate(4deg)}}
+  @keyframes slipOut{to{opacity:0;transform:translateY(-60px) scale(.4)}}
+  @keyframes slipIn{from{opacity:0;transform:translateY(-90px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes twinkle{0%,100%{opacity:.2;transform:scale(.6)}50%{opacity:1;transform:scale(1.2)}}
+  .fly{
+    position:absolute;left:0;top:0;width:28px;height:19px;margin:-10px 0 0 -14px;z-index:5;opacity:0;pointer-events:none;border-radius:3px;
+    background:linear-gradient(160deg,transparent 48%,rgba(0,0,0,.12) 50%,transparent 52%),linear-gradient(20deg,transparent 48%,rgba(0,0,0,.12) 50%,transparent 52%),#ffd3a8;
+  }
+  .fly.go{animation:fly .58s cubic-bezier(.3,.8,.4,1) forwards}
+  @keyframes fly{
+    0%{opacity:1;transform:translateY(0) rotate(0) scale(.7)}
+    85%{opacity:1}
+    100%{opacity:0;transform:translateY(var(--fy)) rotate(540deg) scale(1.5)}
+  }
+  .jar-hint{margin-top:10px;font-family:"Caveat",cursive;font-size:1.4rem;color:var(--rose);animation:pulse 1.8s ease-in-out infinite}
   .btn{
     display:inline-flex;align-items:center;gap:8px;border:0;cursor:pointer;
     padding:14px 26px;border-radius:99px;font-weight:800;font-size:1rem;letter-spacing:.02em;
@@ -429,7 +463,6 @@
   }
   .btn:active{transform:scale(.95)}
   .btn.ghost{background:#fff;color:var(--rose-deep);box-shadow:var(--shadow)}
-  .count{margin-top:12px;font-size:.82rem;color:var(--ink-soft);font-weight:700}
 
   /* closing */
   .closing{text-align:center;padding:70px 0 20px}
@@ -557,8 +590,11 @@
     </div>
     <p class="cake-hint" id="cakeHint">make a wish dulu terus ketuk kuenya yaa</p>
     <p class="cake-mic" id="cakeMic" hidden><i></i>mic nyala tiup aja ke hapenya</p>
-    <p class="scroll-cue" id="scrollCue">geser ke bawah<i>↓</i></p>
+    <button class="btn next-btn" id="nextBtn" hidden>buka pesannya 💌</button>
   </section>
+
+  <!-- halaman pesan: baru kebuka setelah lilinnya ditiup -->
+  <div id="pesan" hidden>
 
   <!-- dunia kartun: matahari terbit, aku jalan, poin bangga muncul jadi balon pikiran -->
   <section class="world" id="world">
@@ -766,14 +802,40 @@
 
 
   <section class="block">
-    <div class="sec-head reveal">
-      <p class="eyebrow">toples senyum</p>
-      <h2>ambil satu pesan <em>kecil</em></h2>
-    </div>
-    <div class="jar reveal">
-      <div class="note" id="note">pencet tombolnya ada pesan buat kamu</div>
-      <button class="btn" id="noteBtn">ambil satu ♥</button>
-      <p class="count" id="noteCount"></p>
+    <div class="jar-wrap reveal">
+      <div class="note" id="note"></div>
+      <button class="jar-btn" id="noteBtn" aria-label="Ambil satu pesan dari toples">
+        <svg class="jar" viewBox="0 0 160 200" aria-hidden="true">
+          <ellipse cx="80" cy="192" rx="52" ry="6" fill="rgba(74,43,53,.12)"/>
+          <path d="M38 54 Q30 62 30 80 L30 170 Q30 188 50 188 L110 188 Q130 188 130 170 L130 80 Q130 62 122 54 Z" fill="rgba(214,238,255,.55)" stroke="#b9dcf0" stroke-width="3"/>
+          <g>
+            <g transform="translate(58 170) rotate(-2)"><g class="slip" style="animation-delay:1.04s"><rect x="-10" y="-7" width="20" height="14" rx="2" fill="#ffd3a8"/><path d="M-10 -7 L0 1 L10 -7" fill="none" stroke="rgba(74,43,53,.18)" stroke-width="1.2"/></g></g>
+            <g transform="translate(80 172) rotate(24)"><g class="slip" style="animation-delay:1.11s"><rect x="-10" y="-7" width="20" height="14" rx="2" fill="#f7a6b9"/><path d="M-10 -7 L0 1 L10 -7" fill="none" stroke="rgba(74,43,53,.18)" stroke-width="1.2"/></g></g>
+            <g transform="translate(102 170) rotate(-1)"><g class="slip" style="animation-delay:0.54s"><rect x="-10" y="-7" width="20" height="14" rx="2" fill="#c9e7ff"/><path d="M-10 -7 L0 1 L10 -7" fill="none" stroke="rgba(74,43,53,.18)" stroke-width="1.2"/></g></g>
+            <g transform="translate(68 156) rotate(24)"><g class="slip" style="animation-delay:0.7s"><rect x="-10" y="-7" width="20" height="14" rx="2" fill="#fff1a8"/><path d="M-10 -7 L0 1 L10 -7" fill="none" stroke="rgba(74,43,53,.18)" stroke-width="1.2"/></g></g>
+            <g transform="translate(92 156) rotate(-19)"><g class="slip" style="animation-delay:0.96s"><rect x="-10" y="-7" width="20" height="14" rx="2" fill="#d9c6f2"/><path d="M-10 -7 L0 1 L10 -7" fill="none" stroke="rgba(74,43,53,.18)" stroke-width="1.2"/></g></g>
+            <g transform="translate(112 158) rotate(0)"><g class="slip" style="animation-delay:0.76s"><rect x="-10" y="-7" width="20" height="14" rx="2" fill="#c6ecdc"/><path d="M-10 -7 L0 1 L10 -7" fill="none" stroke="rgba(74,43,53,.18)" stroke-width="1.2"/></g></g>
+            <g transform="translate(56 142) rotate(20)"><g class="slip" style="animation-delay:0.22s"><rect x="-10" y="-7" width="20" height="14" rx="2" fill="#ffd3a8"/><path d="M-10 -7 L0 1 L10 -7" fill="none" stroke="rgba(74,43,53,.18)" stroke-width="1.2"/></g></g>
+            <g transform="translate(80 140) rotate(-2)"><g class="slip" style="animation-delay:0.36s"><rect x="-10" y="-7" width="20" height="14" rx="2" fill="#f7a6b9"/><path d="M-10 -7 L0 1 L10 -7" fill="none" stroke="rgba(74,43,53,.18)" stroke-width="1.2"/></g></g>
+            <g transform="translate(104 142) rotate(-25)"><g class="slip" style="animation-delay:0.65s"><rect x="-10" y="-7" width="20" height="14" rx="2" fill="#c9e7ff"/><path d="M-10 -7 L0 1 L10 -7" fill="none" stroke="rgba(74,43,53,.18)" stroke-width="1.2"/></g></g>
+            <g transform="translate(70 126) rotate(26)"><g class="slip" style="animation-delay:0.83s"><rect x="-10" y="-7" width="20" height="14" rx="2" fill="#fff1a8"/><path d="M-10 -7 L0 1 L10 -7" fill="none" stroke="rgba(74,43,53,.18)" stroke-width="1.2"/></g></g>
+            <g transform="translate(94 124) rotate(-28)"><g class="slip" style="animation-delay:0.71s"><rect x="-10" y="-7" width="20" height="14" rx="2" fill="#d9c6f2"/><path d="M-10 -7 L0 1 L10 -7" fill="none" stroke="rgba(74,43,53,.18)" stroke-width="1.2"/></g></g>
+            <g transform="translate(82 110) rotate(-5)"><g class="slip" style="animation-delay:1.16s"><rect x="-10" y="-7" width="20" height="14" rx="2" fill="#c6ecdc"/><path d="M-10 -7 L0 1 L10 -7" fill="none" stroke="rgba(74,43,53,.18)" stroke-width="1.2"/></g></g>
+          </g>
+          <path d="M42 84 Q40 120 44 168" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" opacity=".55"/>
+          <path d="M118 96 Q120 120 117 140" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".4"/>
+          <rect x="44" y="40" width="72" height="16" rx="4" fill="rgba(214,238,255,.75)" stroke="#b9dcf0" stroke-width="3"/>
+          <g class="lid">
+            <rect x="36" y="22" width="88" height="21" rx="7" fill="#f7a6b9" stroke="#e8577a" stroke-width="2.5"/>
+            <path d="M50 26 V39 M64 26 V39 M78 26 V39 M92 26 V39 M106 26 V39" stroke="#fbd3dc" stroke-width="3" stroke-linecap="round"/>
+          </g>
+          <path class="spark" d="M16 60 l3 7 7 3 -7 3 -3 7 -3 -7 -7 -3 7 -3z" fill="#ffd45a"/>
+          <path class="spark" d="M142 104 l2 5 5 2 -5 2 -2 5 -2 -5 -5 -2 5 -2z" fill="#f7a6b9" style="animation-delay:.6s"/>
+          <path class="spark" d="M146 40 l2 4 4 2 -4 2 -2 4 -2 -4 -4 -2 4 -2z" fill="#c9a7eb" style="animation-delay:1.1s"/>
+        </svg>
+      </button>
+      <span class="fly" id="fly"></span>
+      <p class="jar-hint">ketuk toplesnya</p>
     </div>
   </section>
 
@@ -785,6 +847,7 @@
   </section>
 
   <footer>icad buatin ini buat <span class="nama"></span> ♥</footer>
+  </div>
 </main>
 
 <script>
@@ -796,6 +859,10 @@
     bukaPada: "2026-11-11T00:00:00+07:00",
     // backsound: taruh lagu (mp3) di folder "musik/". kalau nggak ada, dipakai musik kotak musik bawaan
     musik: "musik/lagu.mp3",
+    // backsound happy birthday di halaman kue: taruh mp3 di sini kalau mau, kalau nggak ada pakai aransemen bawaan
+    laguUltah: "musik/ultah.mp3",
+    // suara pas lilin ditiup (misal sorakan hore): kalau nggak ada, pakai letupan + fanfare + tepuk tangan bawaan
+    soraKado: "musik/hore.mp3",
   };
   const PESAN = [
     "semangat terus yaa",
@@ -1225,14 +1292,6 @@
       ctx.createMediaElementSource(file).connect(out);
     }
 
-    // dipanggil langsung saat kado diketuk (masih dalam sentuhan), biar hape mau muter audio
-    // walaupun kadonya baru kebuka setelah izin mic dijawab. volumenya masih 0.
-    function prime() {
-      if (!audio()) return;
-      setupFile();
-      if (mode === "file" && file) file.play().catch(() => {});
-    }
-
     function start() {
       if (on || !audio()) return;
       on = true;
@@ -1279,7 +1338,7 @@
       else { ctx.resume(); if (file && mode === "file") file.play().catch(() => {}); }
     });
 
-    return { prime, start, duck, dip, ctx: audio };
+    return { start, stop, duck, dip, ctx: audio };
   })();
 
   // mic buat niup lilin
@@ -1353,30 +1412,272 @@
     return { request, ensure, listen, stop, get state() { return state; } };
   })();
 
-  // lagu "Happy Birthday" kecil pakai Web Audio
-  function playSong() {
+  // file suara opsional (musik/ultah.mp3, musik/hore.mp3). kalau nggak ada, pakai suara bawaan
+  const sfx = {};
+  function loadSfx() {
     const ctx = Music.ctx();
     if (!ctx) return;
-    Music.duck(11);
-    try {
-      const F = { G4: 392, A4: 440, B4: 493.88, C5: 523.25, D5: 587.33, E5: 659.25, F5: 698.46, G5: 783.99 };
-      const song = [
-        ["G4", .75], ["G4", .25], ["A4", 1], ["G4", 1], ["C5", 1], ["B4", 2],
-        ["G4", .75], ["G4", .25], ["A4", 1], ["G4", 1], ["D5", 1], ["C5", 2],
-        ["G4", .75], ["G4", .25], ["G5", 1], ["E5", 1], ["C5", 1], ["B4", 1], ["A4", 2],
-        ["F5", .75], ["F5", .25], ["E5", 1], ["C5", 1], ["D5", 1], ["C5", 3],
-      ];
-      const beat = 0.4;
-      let t = ctx.currentTime + 0.1;
-      for (const [n, d] of song) {
+    [["ultah", CONFIG.laguUltah], ["hore", CONFIG.soraKado]].forEach(([key, url]) => {
+      if (!url || sfx[key] !== undefined) return;
+      sfx[key] = null;
+      fetch(url)
+        .then((r) => (r.ok ? r.arrayBuffer() : Promise.reject()))
+        .then((ab) => new Promise((ok, no) => ctx.decodeAudioData(ab, ok, no)))
+        .then((buf) => (sfx[key] = buf))
+        .catch(() => {});
+    });
+  }
+
+  // jalur keluar suara efek: kompresor biar nggak pecah + gema ruangan
+  function fxBus(ctx, level, revMix) {
+    const outG = ctx.createGain(), comp = ctx.createDynamicsCompressor();
+    outG.gain.value = level;
+    outG.connect(comp).connect(ctx.destination);
+    const rev = ctx.createConvolver(), revG = ctx.createGain();
+    const len = ctx.sampleRate * 1.8, ir = ctx.createBuffer(2, len, ctx.sampleRate);
+    for (let c = 0; c < 2; c++) {
+      const d = ir.getChannelData(c);
+      for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 3);
+    }
+    rev.buffer = ir;
+    revG.gain.value = revMix;
+    rev.connect(revG).connect(outG);
+    return { outG, rev };
+  }
+
+  // backsound happy birthday di halaman kue: diulang terus sampai lilinnya ditiup
+  // (piano elektrik + iringan waltz + bass + shaker + gema)
+  const Bday = (() => {
+    let bus = null, timer = null, src = null;
+    const hz = (m) => 440 * Math.pow(2, (m - 69) / 12);
+    const CHORDS = { C: [60, 64, 67, 48], G7: [59, 62, 65, 43], F: [60, 65, 69, 41] };
+    // [nada midi, panjang ketukan, akor yang mulai di nada ini]
+    const MEL = [
+      [67, .75], [67, .25], [69, 1, "C"], [67, 1], [72, 1], [71, 2, "G7"],
+      [67, .75], [67, .25], [69, 1], [67, 1], [74, 1], [72, 2, "C"],
+      [67, .75], [67, .25], [79, 1], [76, 1], [72, 1], [71, 1, "F"], [69, 2],
+      [77, .75], [77, .25], [76, 1, "C"], [72, 1], [74, 1, "G7"], [72, 3, "C"],
+    ];
+    const BEAT = 0.5;
+
+    function pass(ctx, t0) {
+      const { outG, rev } = bus;
+      const ep = (m, t, dur, vol, bell = 0) => {
+        const f = hz(m);
+        const car = ctx.createOscillator(), mod = ctx.createOscillator(), mg = ctx.createGain(), g = ctx.createGain();
+        car.frequency.value = f;
+        mod.frequency.value = f;
+        mg.gain.setValueAtTime(f * 1.8, t);
+        mg.gain.exponentialRampToValueAtTime(f * 0.12, t + 0.7);
+        mod.connect(mg).connect(car.frequency);
+        g.gain.setValueAtTime(0.0001, t);
+        g.gain.exponentialRampToValueAtTime(vol, t + 0.008);
+        g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+        car.connect(g);
+        g.connect(outG);
+        g.connect(rev);
+        car.start(t); mod.start(t); car.stop(t + dur + 0.05); mod.stop(t + dur + 0.05);
+        if (bell) {
+          const o = ctx.createOscillator(), bg = ctx.createGain();
+          o.frequency.value = f * 2;
+          bg.gain.setValueAtTime(0.0001, t);
+          bg.gain.exponentialRampToValueAtTime(bell, t + 0.005);
+          bg.gain.exponentialRampToValueAtTime(0.0001, t + 0.9);
+          o.connect(bg);
+          bg.connect(outG);
+          bg.connect(rev);
+          o.start(t); o.stop(t + 1);
+        }
+      };
+      const bass = (m, t, dur) => {
         const o = ctx.createOscillator(), g = ctx.createGain();
-        o.type = "triangle"; o.frequency.value = F[n];
-        g.gain.setValueAtTime(0, t);
-        g.gain.linearRampToValueAtTime(0.16, t + 0.02);
-        g.gain.exponentialRampToValueAtTime(0.001, t + d * beat * 0.95);
-        o.connect(g).connect(ctx.destination);
-        o.start(t); o.stop(t + d * beat);
-        t += d * beat;
+        o.type = "triangle";
+        o.frequency.value = hz(m);
+        g.gain.setValueAtTime(0.0001, t);
+        g.gain.exponentialRampToValueAtTime(0.32, t + 0.01);
+        g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+        o.connect(g).connect(outG);
+        o.start(t); o.stop(t + dur + 0.05);
+      };
+      const noise = ctx.createBuffer(1, ctx.sampleRate * 0.1, ctx.sampleRate);
+      const nd = noise.getChannelData(0);
+      for (let i = 0; i < nd.length; i++) nd[i] = Math.random() * 2 - 1;
+      const shaker = (t, vol) => {
+        const n = ctx.createBufferSource(), f = ctx.createBiquadFilter(), g = ctx.createGain();
+        n.buffer = noise;
+        f.type = "highpass";
+        f.frequency.value = 6500;
+        g.gain.setValueAtTime(vol, t);
+        g.gain.exponentialRampToValueAtTime(0.0001, t + 0.06);
+        n.connect(f).connect(g).connect(outG);
+        n.start(t); n.stop(t + 0.08);
+      };
+
+      let t = t0, chord = null;
+      const changes = [];
+      MEL.forEach(([m, d, ch]) => {
+        if (ch) changes.push([t, ch]);
+        ep(m, t, Math.max(0.6, d * BEAT * 1.4), 0.2, 0.035);
+        t += d * BEAT;
+      });
+      const end = t;
+      // iringan waltz: bass di ketukan 1, akor di ketukan 2 & 3, shaker tiap setengah ketukan
+      let k = 0;
+      for (let bt = t0 + BEAT; bt < end - 0.01; bt += BEAT, k++) {
+        changes.forEach(([ct, ch]) => { if (ct <= bt + 0.01) chord = ch; });
+        if (!chord) continue;
+        const [x, y, z, bs] = CHORDS[chord];
+        if (k % 3 === 0) bass(bs, bt, BEAT * 1.4);
+        else [x, y, z].forEach((m) => ep(m, bt, BEAT * 0.9, 0.055));
+        shaker(bt, k % 3 === 0 ? 0.09 : 0.05);
+        shaker(bt + BEAT / 2, 0.03);
+      }
+      bass(36, end, 2.2);
+      [60, 64, 67, 72].forEach((m) => ep(m, end, 2.2, 0.07));
+      [84, 88, 91, 96].forEach((m, i) => ep(m, end + 0.08 * i, 1.2, 0.06, 0.02));
+      return end;
+    }
+
+    function start() {
+      const ctx = Music.ctx();
+      if (!ctx) return;
+      stop();
+      try {
+        // volumenya sedang aja, biar mic masih bisa denger tiupan
+        bus = fxBus(ctx, 0.6, 0.28);
+        if (sfx.ultah) {
+          src = ctx.createBufferSource();
+          src.buffer = sfx.ultah;
+          src.loop = true;
+          src.connect(bus.outG);
+          src.start();
+          return;
+        }
+        const loop = (t0) => {
+          const end = pass(ctx, t0);
+          const next = end + 2.4;
+          timer = setTimeout(() => loop(next), (next - ctx.currentTime - 1.5) * 1000);
+        };
+        loop(ctx.currentTime + 0.15);
+      } catch (e) {}
+    }
+
+    function stop() {
+      clearTimeout(timer);
+      timer = null;
+      if (!bus) return;
+      const ctx = Music.ctx(), g = bus.outG.gain;
+      g.cancelScheduledValues(ctx.currentTime);
+      g.setTargetAtTime(0, ctx.currentTime, 0.2);
+      const old = src;
+      if (old) setTimeout(() => old.stop(), 1500);
+      bus = null;
+      src = null;
+    }
+
+    return { start, stop };
+  })();
+
+  // pas lilin ditiup: letupan konfeti + fanfare ta-daa + tepuk tangan
+  function cheer() {
+    const ctx = Music.ctx();
+    if (!ctx) return;
+    try {
+      const { outG, rev } = fxBus(ctx, 0.9, 0.22);
+      if (sfx.hore) {
+        const s1 = ctx.createBufferSource();
+        s1.buffer = sfx.hore;
+        s1.connect(outG);
+        s1.start();
+        return;
+      }
+      const t0 = ctx.currentTime + 0.02;
+      const noiseBuf = (sec) => {
+        const b = ctx.createBuffer(1, ctx.sampleRate * sec, ctx.sampleRate), d = b.getChannelData(0);
+        for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+        return b;
+      };
+      // letupan
+      const pop = ctx.createBufferSource(), pf = ctx.createBiquadFilter(), pg = ctx.createGain();
+      pop.buffer = noiseBuf(0.1);
+      pf.type = "highpass";
+      pf.frequency.value = 900;
+      pg.gain.setValueAtTime(0.9, t0);
+      pg.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.09);
+      pop.connect(pf).connect(pg).connect(outG);
+      pop.start(t0);
+      const th = ctx.createOscillator(), tg = ctx.createGain();
+      th.frequency.setValueAtTime(140, t0);
+      th.frequency.exponentialRampToValueAtTime(45, t0 + 0.15);
+      tg.gain.setValueAtTime(0.7, t0);
+      tg.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.18);
+      th.connect(tg).connect(outG);
+      th.start(t0); th.stop(t0 + 0.2);
+      // fanfare "ta-daa!": akor tiupan logam yang terang, lalu kilauan lonceng naik
+      const brass = (m, t, dur, vol) => {
+        const f = 440 * Math.pow(2, (m - 69) / 12);
+        const lp = ctx.createBiquadFilter(), g = ctx.createGain();
+        lp.type = "lowpass";
+        lp.Q.value = 0.7;
+        lp.frequency.setValueAtTime(700, t);
+        lp.frequency.exponentialRampToValueAtTime(5200, t + 0.06);
+        lp.frequency.exponentialRampToValueAtTime(2600, t + 0.3);
+        g.gain.setValueAtTime(0.0001, t);
+        g.gain.exponentialRampToValueAtTime(vol, t + 0.025);
+        g.gain.setValueAtTime(vol * 0.8, t + dur - 0.12);
+        g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+        lp.connect(g);
+        g.connect(outG);
+        g.connect(rev);
+        [-6, 6].forEach((cents) => {
+          const o = ctx.createOscillator();
+          o.type = "sawtooth";
+          o.frequency.value = f;
+          o.detune.value = cents;
+          o.connect(lp);
+          o.start(t);
+          o.stop(t + dur + 0.05);
+        });
+      };
+      [67, 72, 76].forEach((m) => brass(m, t0 + 0.1, 0.16, 0.05));
+      [72, 76, 79, 84].forEach((m) => brass(m, t0 + 0.3, 1.2, 0.045));
+      [84, 88, 91, 96, 100].forEach((m, i) => {
+        const t = t0 + 0.35 + i * 0.07;
+        const o = ctx.createOscillator(), g = ctx.createGain();
+        o.frequency.value = 440 * Math.pow(2, (m - 69) / 12);
+        g.gain.setValueAtTime(0.0001, t);
+        g.gain.exponentialRampToValueAtTime(0.07, t + 0.005);
+        g.gain.exponentialRampToValueAtTime(0.0001, t + 1);
+        o.connect(g);
+        g.connect(outG);
+        g.connect(rev);
+        o.start(t);
+        o.stop(t + 1.05);
+      });
+      // tepuk tangan ramai: banyak tepukan kecil acak, makin lama makin pelan
+      const clapBuf = noiseBuf(0.05);
+      const total = 2.8;
+      for (let i = 0; i < 170; i++) {
+        const u = Math.random();
+        const at = 0.15 + Math.pow(u, 1.6) * total;
+        const t = t0 + at;
+        const fade = 1 - (at - 0.15) / total;
+        const c = ctx.createBufferSource(), bp = ctx.createBiquadFilter(), g = ctx.createGain();
+        c.buffer = clapBuf;
+        bp.type = "bandpass";
+        bp.frequency.value = 900 + Math.random() * 1500;
+        bp.Q.value = 1.1;
+        const v = (0.12 + Math.random() * 0.2) * fade;
+        g.gain.setValueAtTime(v, t);
+        g.gain.exponentialRampToValueAtTime(0.0001, t + 0.045);
+        c.connect(bp).connect(g);
+        if (ctx.createStereoPanner) {
+          const pan = ctx.createStereoPanner();
+          pan.pan.value = Math.random() * 1.6 - 0.8;
+          g.connect(pan).connect(outG);
+        } else g.connect(outG);
+        g.connect(rev);
+        c.start(t); c.stop(t + 0.06);
       }
     } catch (e) {}
   }
@@ -1435,7 +1736,7 @@
   $("#giftBtn").addEventListener("click", async function () {
     if (this.dataset.busy) return;
     this.dataset.busy = "1";
-    Music.prime();
+    Music.ctx(); // nyalain audio selagi masih dalam sentuhan, lagunya sendiri baru main pas buka pesan
     // minta izin mic dulu, kadonya baru kebuka setelah dijawab (paling lama nunggu 15 detik)
     $("#giftHint").textContent = "pencet izinkan dulu yaa 🎤";
     const ask = Mic.request();
@@ -1444,7 +1745,8 @@
     $("#giftHint").textContent = "yeayy ♥";
     $("#micNote").hidden = true;
     this.classList.add("open");
-    Music.start();
+    loadSfx();
+    Bday.start();
     if (navigator.vibrate) navigator.vibrate([40, 60, 90]);
     const r = this.getBoundingClientRect();
     setTimeout(() => confetti(170, r.left + r.width / 2, r.top + r.height * 0.4), 250);
@@ -1521,12 +1823,13 @@
     cake.classList.add("out");
     hint.textContent = "yeayy semoga semua doanya terkabul yaa ✨";
     hint.classList.add("done");
-    playSong();
+    Bday.stop();
+    cheer();
     const r = cake.getBoundingClientRect();
     confetti(180, r.left + r.width / 2, r.top + r.height * 0.3);
     setTimeout(() => confetti(90, innerWidth * 0.2, innerHeight * 0.3), 500);
     setTimeout(() => confetti(90, innerWidth * 0.8, innerHeight * 0.3), 800);
-    setTimeout(() => $("#scrollCue").classList.add("show"), 1200);
+    setTimeout(() => (nextBtn.hidden = false), 2500);
   }
   cake.addEventListener("click", blow);
   cake.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); blow(); } });
@@ -1557,28 +1860,82 @@
   }, { threshold: 0.15, rootMargin: "0px 0px -30px 0px" });
   document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
 
-  // toples pesan
-  let bag = [], taken = 0;
-  $("#noteBtn").addEventListener("click", function () {
-    if (!bag.length) bag = PESAN.slice().sort(() => Math.random() - 0.5);
-    const note = $("#note");
-    note.textContent = bag.pop();
-    note.classList.remove("pop"); void note.offsetWidth; note.classList.add("pop");
-    taken++;
-    $("#noteCount").textContent = taken >= PESAN.length
-      ? "udah kebuka semua hehe"
-      : taken + " dari " + PESAN.length + " pesan udah dibuka";
-    const r = this.getBoundingClientRect();
-    confetti(26, r.left + r.width / 2, r.top);
+  // toples: ketuk, toplesnya goyang, satu kertas terbang keluar terus kebuka jadi pesan
+  (function () {
+    const btn = $("#noteBtn"), jar = btn.querySelector(".jar"), note = $("#note"), fly = $("#fly");
+    const wrap = btn.parentElement, slips = [...jar.querySelectorAll(".slip")];
+    let bag = [], busy = false;
+    btn.addEventListener("click", () => {
+      if (busy) return;
+      busy = true;
+      let left = slips.filter((sl) => !sl.classList.contains("gone"));
+      if (!left.length) {
+        // toplesnya kosong, isi lagi
+        slips.forEach((sl) => { sl.classList.remove("gone"); sl.classList.add("back"); });
+        setTimeout(() => slips.forEach((sl) => sl.classList.remove("back")), 1800);
+        left = slips.slice();
+      }
+      jar.classList.remove("shake");
+      void jar.getBoundingClientRect();
+      jar.classList.add("shake");
+      // ambil kertas yang paling atas
+      const top = left.reduce((a, b) => (b.getBoundingClientRect().top < a.getBoundingClientRect().top ? b : a));
+      top.classList.remove("back");
+      top.classList.add("gone");
+
+      if (!bag.length) bag = PESAN.slice().sort(() => Math.random() - 0.5);
+      const msg = bag.pop();
+      const wr = wrap.getBoundingClientRect(), jr = jar.getBoundingClientRect(), nr = note.getBoundingClientRect();
+      const fromY = jr.top + jr.height * 0.18;
+      fly.style.left = jr.left - wr.left + jr.width / 2 + "px";
+      fly.style.top = fromY - wr.top + "px";
+      fly.style.setProperty("--fy", nr.top + nr.height / 2 - fromY + "px");
+      fly.classList.remove("go");
+      void fly.offsetWidth;
+      fly.classList.add("go");
+      note.classList.remove("show");
+
+      setTimeout(() => {
+        note.textContent = msg;
+        note.style.visibility = "visible";
+        void note.offsetWidth;
+        note.classList.add("show");
+        const r = note.getBoundingClientRect();
+        confetti(22, r.left + r.width / 2, r.top + r.height / 2);
+        busy = false;
+      }, 540);
+    });
+  })();
+
+  // halaman pesan baru kebuka setelah lilin ditiup
+  const hero = $(".hero"), pesan = $("#pesan"), nextBtn = $("#nextBtn");
+  nextBtn.addEventListener("click", () => {
+    Music.start();
+    hero.classList.add("leave");
+    setTimeout(() => {
+      hero.hidden = true;
+      hero.classList.remove("leave");
+      pesan.hidden = false;
+      pesan.classList.remove("enter");
+      void pesan.offsetWidth;
+      pesan.classList.add("enter");
+      scrollTo(0, 0);
+      updateWorld();
+    }, 500);
   });
 
-  // rayain lagi
+  // rayain lagi: balik ke halaman kue
   $("#replay").addEventListener("click", () => {
+    Music.stop();
+    pesan.hidden = true;
+    hero.hidden = false;
+    nextBtn.hidden = true;
+    scrollTo(0, 0);
     lightCandles();
     hint.textContent = HINT_TAP;
     hint.classList.remove("done");
     startListening();
-    scrollTo({ top: 0, behavior: reduced ? "auto" : "smooth" });
+    Bday.start();
     confetti(120, innerWidth / 2, innerHeight * 0.3);
   });
 
