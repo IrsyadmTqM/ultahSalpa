@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#fff4f0">
-<title>Untuk Salpa</title>
+<title>untuk salpa</title>
 <meta name="description" content="Sesuatu kecil buat hari spesialmu.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -101,11 +101,11 @@
   }
   .screen.leave{opacity:0;transform:scale(1.04);pointer-events:none}
   /* layar pembuka: semua huruf kecil */
-  .screen{text-transform:lowercase}
-  .screen .eyebrow{text-transform:lowercase;letter-spacing:.06em;font-size:.95rem}
+  /* semua huruf kecil */
+  body{text-transform:lowercase}
 
   .eyebrow{
-    font-size:.78rem;font-weight:800;letter-spacing:.22em;text-transform:uppercase;
+    font-size:.95rem;font-weight:800;letter-spacing:.04em;
     color:var(--rose);
   }
   .title{
@@ -406,7 +406,7 @@
 <!-- 1. Layar terkunci sampai hari-H -->
 <section class="screen" id="lock" hidden>
   <div class="seal">♥</div>
-  <p class="eyebrow">ini khusus untuk <span class="nama"></span></p>
+  <p class="eyebrow">icad buatin ini buat <span class="nama"></span></p>
   <h1 class="title">hai <em class="nama"></em></h1>
   <p class="lead">nungguin yaaa hehe sabar dikit yaa</p>
   <div class="countdown" role="timer" aria-live="off">
@@ -436,9 +436,9 @@
 
   <section class="hero">
     <p class="date">11 · 11 · 2026</p>
-    <h1>Selamat ulang tahun,</h1>
+    <h1>selamat ulang tahun</h1>
     <div class="big-name nama"></div>
-    <p class="sub">Hari ini dunia ngerayain satu orang yang spesial banget. Iya, kamu.</p>
+    <p class="sub">hari ini harinya kamu yang lain minggir dulu hehe</p>
     <div class="cake-wrap">
       <svg class="cake" id="cake" viewBox="0 -86 220 286" role="button" tabindex="0" aria-label="Tiup lilin">
         <defs>
@@ -485,8 +485,8 @@
         </g>
       </svg>
     </div>
-    <p class="cake-hint" id="cakeHint">make a wish dulu, terus ketuk kuenya buat tiup lilin</p>
-    <p class="cake-mic" id="cakeMic" hidden><i></i>mic nyala, tiup aja ke hapenya</p>
+    <p class="cake-hint" id="cakeHint">make a wish dulu terus ketuk kuenya yaa</p>
+    <p class="cake-mic" id="cakeMic" hidden><i></i>mic nyala tiup aja ke hapenya</p>
     <p class="scroll-cue" id="scrollCue">geser ke bawah<i>↓</i></p>
   </section>
 
@@ -507,17 +507,17 @@
           <circle cx="80" cy="80" r="40" fill="none" stroke="#ffe27a" stroke-width="2"/>
         </g>
       </svg>
-      <p class="eyebrow">kalau harus diibaratin</p>
-      <h2>Kamu itu kayak <em>matahari</em></h2>
-      <p class="body">Selalu ceria, selalu hangat, dan bikin hari siapa pun jadi lebih terang. Di dekat kamu, hari yang mendung pun rasanya nggak segelap itu.</p>
-      <p class="sun-note">Dan jujur, aku suka banget sama kehadiran itu ☀️</p>
+      <p class="eyebrow">kalau diibaratin nih</p>
+      <h2>kamu tuh kayak <em>matahari</em></h2>
+      <p class="body">ceria terus anaknya dan kalau ada kamu suasananya jadi ikut cerah gitu</p>
+      <p class="sun-note">jujur aku seneng banget ada kamu ☀️</p>
     </div>
   </section>
 
   <section class="block" id="galeriSec">
     <div class="sec-head reveal">
-      <p class="eyebrow">galeri kecil</p>
-      <h2>Si <em>matahari</em> dalam foto</h2>
+      <p class="eyebrow">koleksi foto</p>
+      <h2>foto-foto si <em>matahari</em></h2>
     </div>
     <div class="gallery-wrap reveal">
       <div class="gallery" id="gallery"></div>
@@ -525,73 +525,74 @@
       <button class="gal-nav next" id="galNext" aria-label="Foto berikutnya">›</button>
     </div>
     <div class="dots" id="galDots"></div>
-    <p class="swipe-hint" id="swipeHint">geser fotonya atau ketuk panahnya</p>
+    <p class="swipe-hint" id="swipeHint">geser fotonya atau pencet panahnya</p>
   </section>
 
   <section class="block">
     <div class="sec-head reveal">
-      <p class="eyebrow">dari hati</p>
-      <h2>Hal-hal yang bikin aku <em>bangga</em> sama kamu</h2>
+      <p class="eyebrow">serius nih</p>
+      <h2>yang bikin aku <em>bangga</em> sama kamu</h2>
     </div>
     <div class="pride">
       <article class="pcard reveal"><span class="num">01</span>
-        <h3>Kamu kuat</h3>
-        <p>Buat semua hari berat yang udah kamu lewatin, bahkan yang nggak pernah kamu ceritain. Kamu tetap jalan, dan itu keren banget.</p>
+        <h3>kamu kuat</h3>
+        <p>banyak hari berat yang udah kamu lewatin termasuk yang nggak pernah kamu ceritain dan kamu tetep jalan terus keren banget sih</p>
       </article>
       <article class="pcard reveal"><span class="num">02</span>
-        <h3>Hatimu baik</h3>
-        <p>Cara kamu peduli sama orang lain itu tulus. Banyak orang jadi lebih hangat cuma karena ada kamu di dekat mereka.</p>
+        <h3>hatimu baik</h3>
+        <p>kamu tuh pedulinya tulus ke orang lain makanya orang-orang betah deket kamu</p>
       </article>
       <article class="pcard reveal"><span class="num">03</span>
-        <h3>Kamu terus bertumbuh</h3>
-        <p>Kamu yang sekarang lebih hebat dari kamu yang kemarin. Pelan atau cepat, kamu selalu maju, dan aku lihat itu.</p>
+        <h3>kamu makin keren</h3>
+        <p>kamu yang sekarang udah jauh lebih keren dari kamu yang dulu dan aku liat itu kok</p>
       </article>
       <article class="pcard reveal"><span class="num">04</span>
-        <h3>Kamu jadi dirimu sendiri</h3>
-        <p>Nggak perlu jadi siapa-siapa lagi. Kamu yang apa adanya itu udah cukup, bahkan lebih dari cukup.</p>
+        <h3>kamu ya kamu</h3>
+        <p>nggak usah jadi orang lain kamu yang apa adanya udah lebih dari cukup</p>
       </article>
     </div>
     <div class="proud-banner reveal">
-      <b>Aku bangga banget sama kamu.</b>
-      <span>Hari ini, besok, dan seterusnya.</span>
+      <b>aku bangga banget sama kamu</b>
+      <span>hari ini besok dan seterusnya</span>
     </div>
   </section>
 
   <section class="block">
     <div class="sec-head reveal">
-      <p class="eyebrow">sepucuk surat</p>
-      <h2>Terima kasih udah <em>hadir</em></h2>
+      <p class="eyebrow">surat kecil</p>
+      <h2>makasih udah <em>hadir</em></h2>
     </div>
     <div class="letter reveal">
-      <p>Hai <span class="nama"></span>,</p>
-      <p>Terima kasih udah hadir di hidup ini. Mungkin kamu nggak sadar, tapi kehadiranmu bikin banyak hal jadi lebih ringan, lebih hangat, dan lebih berwarna.</p>
-      <p>Makasih buat tawa yang kamu bagi, buat cerita-cerita kecil, buat sabarmu, dan buat kamu yang tetap jadi kamu.</p>
-      <p>Dunia beruntung punya kamu. Dan aku beruntung banget bisa temenan sama kamu.</p>
-      <p class="sign">temanmu, <span class="dari"></span></p>
+      <p>hai <span class="nama"></span></p>
+      <p>makasih yaa udah hadir di hidup ini</p>
+      <p>mungkin kamu nggak sadar tapi adanya kamu bikin hari-hari jadi lebih seru</p>
+      <p>makasih buat ketawa bareng buat cerita-cerita random dan buat semua hal kecil yang kamu bagi</p>
+      <p>pokoknya aku beruntung banget bisa temenan sama kamu</p>
+      <p class="sign">temanmu <span class="dari"></span></p>
     </div>
   </section>
 
   <section class="block">
     <div class="sec-head reveal">
-      <p class="eyebrow">doa kecil</p>
-      <h2>Harapanku buat kamu</h2>
+      <p class="eyebrow">doa dari aku</p>
+      <h2>harapanku buat kamu</h2>
     </div>
     <ul class="wishes">
-      <li class="reveal"><span class="ico">😊</span><div><h3>Terus senyum ya</h3><p>Senyummu itu salah satu hal paling manis di dunia. Jangan pernah hilang.</p></div></li>
-      <li class="reveal"><span class="ico">🌷</span><div><h3>Selalu happy</h3><p>Semoga hari-harimu lebih banyak senangnya daripada capeknya.</p></div></li>
-      <li class="reveal"><span class="ico">🍀</span><div><h3>Sehat selalu</h3><p>Badan dan hati, dua-duanya. Jangan lupa makan dan istirahat.</p></div></li>
-      <li class="reveal"><span class="ico">✨</span><div><h3>Mimpimu kesampaian</h3><p>Satu per satu. Pelan-pelan juga nggak apa-apa, yang penting jalan.</p></div></li>
-      <li class="reveal"><span class="ico">🤍</span><div><h3>Dikelilingi orang baik</h3><p>Yang sayang kamu sebesar kamu sayang mereka.</p></div></li>
+      <li class="reveal"><span class="ico">😊</span><div><h3>terus senyum yaa</h3><p>senyum kamu tuh manis jadi jangan sampe ilang</p></div></li>
+      <li class="reveal"><span class="ico">🌷</span><div><h3>selalu happy</h3><p>semoga hari-harimu lebih banyak senengnya daripada capeknya</p></div></li>
+      <li class="reveal"><span class="ico">🍀</span><div><h3>sehat terus</h3><p>jangan lupa makan sama istirahat yaa</p></div></li>
+      <li class="reveal"><span class="ico">✨</span><div><h3>mimpimu kesampaian</h3><p>satu-satu aja pelan-pelan juga gapapa yang penting jalan</p></div></li>
+      <li class="reveal"><span class="ico">🤍</span><div><h3>dikelilingi orang baik</h3><p>yang sayang sama kamu sebesar kamu sayang sama mereka</p></div></li>
     </ul>
   </section>
 
   <section class="block">
     <div class="sec-head reveal">
       <p class="eyebrow">toples senyum</p>
-      <h2>Ambil satu pesan <em>kecil</em></h2>
+      <h2>ambil satu pesan <em>kecil</em></h2>
     </div>
     <div class="jar reveal">
-      <div class="note" id="note">ketuk tombolnya, ada pesan buat kamu</div>
+      <div class="note" id="note">pencet tombolnya ada pesan buat kamu</div>
       <button class="btn" id="noteBtn">ambil satu ♥</button>
       <p class="count" id="noteCount"></p>
     </div>
@@ -599,13 +600,14 @@
 
   <section class="closing reveal">
     <span class="heart">♥</span>
-    <h2>Selamat ulang tahun,<br><em class="nama"></em></h2>
-    <p>Semoga di umur yang baru ini kamu makin bahagia, makin disayang, dan nggak pernah lupa buat senyum. Tetap jadi matahari yang ceria itu ya, bersinar dengan caramu sendiri.</p>
-    <p class="from">dari temanmu yang bangga sama kamu,<br><span class="dari"></span></p>
+    <h2>selamat ulang tahun<br><em class="nama"></em></h2>
+    <p>semoga di umur yang baru ini kamu makin bahagia dan makin disayang sama orang-orang di sekitar kamu</p>
+    <p>tetep jadi matahari yang ceria itu yaa</p>
+    <p class="from">dari temanmu yang bangga sama kamu<br><span class="dari"></span></p>
     <button class="btn ghost" id="replay">rayain sekali lagi 🎉</button>
   </section>
 
-  <footer>dibuat dengan ♥ khusus untuk <span class="nama"></span></footer>
+  <footer>icad buatin ini buat <span class="nama"></span> ♥</footer>
 </main>
 
 <script>
@@ -619,28 +621,28 @@
     musik: "musik/lagu.mp3",
   };
   const PESAN = [
-    "Senyummu itu nular, tau.",
-    "Kamu lebih hebat dari yang kamu kira.",
-    "Makasih udah bertahan sejauh ini.",
-    "Kamu pantas dapet semua hal baik.",
-    "Hari ini dunia ngerayain kamu.",
-    "Capek boleh, nyerah jangan. Aku di sini dukung kamu.",
-    "Kamu itu rumah buat banyak orang.",
-    "Jangan lupa bangga sama diri sendiri juga ya.",
-    "Ketawamu itu bikin suasana langsung hidup.",
-    "Tetap jadi kamu, itu udah lebih dari cukup.",
-    "Semoga tahun ini lembut sama kamu.",
-    "Kamu bikin dunia jadi tempat yang lebih manis.",
-    "Tetap bersinar ya, matahari. Banyak yang hangat karena kamu.",
-    "Hari mendung pun kalah sama ceriamu.",
+    "senyum kamu tuh nular tau",
+    "kamu lebih hebat dari yang kamu kira",
+    "makasih udah bertahan sejauh ini",
+    "kamu pantes dapet semua hal baik",
+    "hari ini kamu bintang utamanya",
+    "capek boleh nyerah jangan aku dukung kamu",
+    "kamu tuh tempat pulang buat banyak orang",
+    "jangan lupa bangga sama diri sendiri juga yaa",
+    "ketawa kamu bikin suasana langsung rame",
+    "tetep jadi kamu aja itu udah cukup banget",
+    "semoga tahun ini baik banget sama kamu",
+    "dunia jadi lebih manis gara-gara ada kamu",
+    "tetep bersinar yaa matahari ☀️",
+    "hari mendung juga kalah sama ceria kamu",
   ];
   // taruh file fotonya di folder "foto/", lalu tulis nama file + keterangannya di sini
   const FOTO = [
     // pos = bagian foto yang difokuskan (horizontal vertikal)
-    { file: "foto/1.jpg", caption: "mode manyun, siap berangkat 🛵", pos: "50% 25%" },
-    { file: "foto/2.jpg", caption: "ngejar gelembung, ngejar bahagia 🫧", pos: "50% 45%" },
+    { file: "foto/1.jpg", caption: "mode manyun siap berangkat 🛵", pos: "50% 25%" },
+    { file: "foto/2.jpg", caption: "ngejar gelembung ngejar bahagia 🫧", pos: "50% 45%" },
     { file: "foto/3.jpg", caption: "ngopi dulu biar makin bersinar ☕", pos: "50% 40%" },
-    { file: "foto/4.jpg", caption: "manyun pun tetap lucu, heran", pos: "50% 30%" },
+    { file: "foto/4.jpg", caption: "manyun pun tetep lucu heran", pos: "50% 30%" },
   ];
   // ======================================
 
@@ -649,7 +651,7 @@
   const isLocal = ["localhost", "127.0.0.1", "[::1]", ""].includes(location.hostname);
   document.querySelectorAll(".nama").forEach((el) => (el.textContent = CONFIG.nama));
   document.querySelectorAll(".dari").forEach((el) => (el.textContent = CONFIG.dari));
-  document.title = "Untuk " + CONFIG.nama;
+  document.title = "untuk " + CONFIG.nama.toLowerCase();
 
   // floating hearts
   (function () {
@@ -1140,8 +1142,8 @@
   // tiup lilin
   const cake = $("#cake"), hint = $("#cakeHint"), micBadge = $("#cakeMic");
   const fires = [...cake.querySelectorAll(".fire")];
-  const HINT_TAP = "make a wish dulu, terus ketuk kuenya buat tiup lilin";
-  const HINT_MIC = "make a wish dulu, terus tiup lilinnya beneran 💨";
+  const HINT_TAP = "make a wish dulu terus ketuk kuenya yaa";
+  const HINT_MIC = "make a wish dulu terus tiup lilinnya 💨";
   let blowTime = 0, order = [];
 
   function lightCandles() {
@@ -1164,7 +1166,7 @@
       fires[order[out]].classList.add("off");
       out++;
       if (navigator.vibrate) navigator.vibrate(30);
-      if (out < 3) hint.textContent = out === 1 ? "terus, tiup lagi! 💨" : "dikit lagi! 💨💨";
+      if (out < 3) hint.textContent = out === 1 ? "terus tiup lagii 💨" : "dikit lagii 💨💨";
     }
     if (out === 3) blow();
   }
@@ -1197,7 +1199,7 @@
     Music.dip(false);
     fires.forEach((f) => f.classList.add("off"));
     cake.classList.add("out");
-    hint.textContent = "Yeay! Semoga semua doamu dikabulin ✨";
+    hint.textContent = "yeayy semoga semua doanya terkabul yaa ✨";
     hint.classList.add("done");
     playSong();
     const r = cake.getBoundingClientRect();
@@ -1244,8 +1246,8 @@
     note.classList.remove("pop"); void note.offsetWidth; note.classList.add("pop");
     taken++;
     $("#noteCount").textContent = taken >= PESAN.length
-      ? "semua pesan udah kamu buka. dan semuanya beneran ♥"
-      : taken + " dari " + PESAN.length + " pesan dibuka";
+      ? "udah kebuka semua dan semuanya beneran lho ♥"
+      : taken + " dari " + PESAN.length + " pesan udah dibuka";
     const r = this.getBoundingClientRect();
     confetti(26, r.left + r.width / 2, r.top);
   });
